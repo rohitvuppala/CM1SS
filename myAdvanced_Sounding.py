@@ -29,38 +29,35 @@ from siphon.simplewebservice.wyoming import WyomingUpperAir
 #%%
 """
 Get data from server using Siphon Package
+If not: Comment this section
 """
 #Specifier
-#sname = "2004-05-30-UTC12Z"
-#date = datetime(2004, 5, 30, 0)
-#station = '72357'   #Norman Station
-#df = WyomingUpperAir.request_data(date, station)
+sname = "2004-05-30-UTC12Z"
+date = datetime(2004, 5, 30, 0)
+station = '72357'   #Norman Station
+df = WyomingUpperAir.request_data(date, station)
 
 #sname = "2021-04-24-UTC12Z"
 #date = datetime(2021, 4, 24, 0)
 #station = '72355'   #Fort SIll
 #df = WyomingUpperAir.request_data(date, station)
 
+col_names = ['pressure', 'height', 'temperature','dewpoint', 'direction', 'speed']
+df = df.dropna(subset=('temperature', 'dewpoint', 'direction', 'speed'), how='all'
+               ).reset_index(drop=True)
+#%%
 """
 Get data from local file
+If not: Comment this section
 """
-sname = "2004-05-30-UTC0Z"
-col_names = ['pressure', 'height', 'temperature','dewpoint', 'relh', 'qv', 'direction', 'speed','theta']
-df = pd.read_fwf('../2004-05-29/'+sname+'.txt',skiprows=5, usecols=[0, 1, 2, 3, 4, 5, 6, 7, 8], names=col_names)
-
-
-"""
-Example Data set
-"""
-#col_names = ['pressure', 'height', 'temperature', 'dewpoint', 'direction', 'speed']
-
-#df = pd.read_fwf(get_test_data('may4_sounding.txt', as_file_obj=False),
-#                 skiprows=5, usecols=[0, 1, 2, 3, 6, 7], names=col_names)
-
+#sname = "2004-05-30-UTC0Z"
+#col_names = ['pressure', 'height', 'temperature','dewpoint', 'relh', 'qv', 'direction', 'speed','theta']
+#df = pd.read_fwf('../2004-05-29/'+sname+'.txt',skiprows=5, usecols=[0, 1, 2, 3, 4, 5, 6, 7, 8], names=col_names)
 
 # Drop any rows with all NaN values for T, Td, winds
-df = df.dropna(subset=('temperature', 'relh', 'qv','dewpoint', 'direction', 'speed','theta'), how='all'
-               ).reset_index(drop=True)
+
+#df = df.dropna(subset=('temperature', 'relh', 'qv','dewpoint', 'direction', 'speed','theta'), how='all'
+#               ).reset_index(drop=True)
 
 ###########################################
 #Data and units
